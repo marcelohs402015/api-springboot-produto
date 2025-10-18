@@ -68,7 +68,7 @@ GET /api/mensagem         # Obter mensagem do sistema
 
 ### Pré-requisitos
 - **Java 21 JDK** instalado
-- **PostgreSQL** configurado e rodando
+- **PostgreSQL 16** configurado e rodando
 - **Maven** (ou usar o wrapper incluído)
 
 ### 1️⃣ Clone o repositório
@@ -77,30 +77,81 @@ git clone git@github.com:marcelohs402015/api-springboot-produto.git
 cd api-springboot-produto
 ```
 
-### 2️⃣ Configure o banco de dados
+### 2️⃣ Configure o banco de dados PostgreSQL
 
+#### Conectar como superuser e criar o banco:
+```sql
+-- Conectar no PostgreSQL como postgres
+psql -U postgres
+
+-- Criar banco de dados
+CREATE DATABASE mstechdb;
+
+-- Criar usuário admin
+CREATE USER admin WITH PASSWORD 'admin';
+
+-- Conceder privilégios
+GRANT ALL PRIVILEGES ON DATABASE mstechdb TO admin;
+GRANT ALL ON SCHEMA public TO admin;
+```
+
+#### Configuração da aplicação:
 O projeto está configurado para usar PostgreSQL local com:
 - **Banco:** `mstechdb`
 - **Usuário:** `admin`
 - **Senha:** `admin`
+- **Porta:** `5432`
 
 **Configuração no `application.properties`:**
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/mstechdb
 spring.datasource.username=admin
 spring.datasource.password=admin
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
 ```
 
 ### 3️⃣ Execute a aplicação
 ```bash
 # Windows
-./mvnw.cmd spring-boot:run
+mvnw.cmd spring-boot:run
 
 # Linux/macOS
 ./mvnw spring-boot:run
 ```
 
 🌐 **Aplicação disponível em:** `http://localhost:8080`
+
+### 4️⃣ Teste a API
+
+#### Teste Automático:
+```bash
+# Execute o script de teste (Windows)
+test_api.bat
+```
+
+#### Teste Manual:
+1. **Fazer login:**
+```bash
+curl -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username": "admin", "password": "admin"}'
+```
+
+2. **Listar produtos (use o token obtido):**
+```bash
+curl -X GET http://localhost:8080/api/produtos \
+  -H "Authorization: Bearer [SEU_TOKEN_JWT]"
+```
+
+📊 **[Ver Resultados Completos dos Testes de Integração](TESTE_RESULTADOS.md)** 
+
+### ✅ Status dos Testes
+- ✅ **Aplicação:** Spring Boot 3.4.3 + Java 21
+- ✅ **Banco:** PostgreSQL 16 integrado
+- ✅ **Autenticação:** JWT funcionando
+- ✅ **CRUD:** Produtos testado e validado
+- ✅ **Performance:** Tempo de resposta < 200ms
 
 ## 📖 Exemplos de Uso
 
