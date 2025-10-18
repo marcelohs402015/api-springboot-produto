@@ -2,6 +2,8 @@
 
 Uma API REST robusta desenvolvida em **Java 21** com **Spring Boot 3.4.3** para gerenciamento completo de produtos, incluindo sistema de autenticação JWT e operações CRUD.
 
+**Desenvolvido por:** [Marcelo Hernandes](https://github.com/marcelohs402015)
+
 ## 🎯 Objetivo do Projeto
 
 Esta API foi desenvolvida para fornecer uma solução completa de **gerenciamento de produtos** com funcionalidades de:
@@ -76,11 +78,17 @@ cd api-springboot-produto
 ```
 
 ### 2️⃣ Configure o banco de dados
-Edite `src/main/resources/application.properties`:
+
+O projeto está configurado para usar PostgreSQL local com:
+- **Banco:** `mstechdb`
+- **Usuário:** `admin`
+- **Senha:** `admin`
+
+**Configuração no `application.properties`:**
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/meubanco
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
+spring.datasource.url=jdbc:postgresql://localhost:5432/mstechdb
+spring.datasource.username=admin
+spring.datasource.password=admin
 ```
 
 ### 3️⃣ Execute a aplicação
@@ -224,5 +232,7 @@ Este projeto está sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE)
   <strong>Desenvolvido com ❤️ usando Spring Boot 3.4.3 e Java 21</strong>
   <br>
   <sub>API REST para gerenciamento de produtos</sub>
+  <br><br>
+  <strong>👨‍💻 Desenvolvido por <a href="https://github.com/marcelohs402015">Marcelo Hernandes</a></strong>
 </div>
 

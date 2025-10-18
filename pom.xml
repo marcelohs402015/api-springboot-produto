@@ -11,8 +11,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>meu-primeiro-springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>meu-primeiro-springboot</name>
-	<description>Primeiro projeto Spring Boot</description>
+	<name>APIRest Produtos</name>
+	<description>APIRest Produtos </description>
 	<url/>
 	<licenses>
 		<license/>
