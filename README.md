@@ -1,24 +1,228 @@
-# Meu Primeiro Curso de Java Spring Boot 🚀
+# API REST - Gerenciamento de Produtos 🛒
 
-Conforme prometido, esse é o meu primeiro curso completo de **Java Spring Boot (para iniciantes)**, **TOTALMENTE gratuito** no canal! São **duas horas sem cortes** para você aprender o essencial e dar os primeiros passos no desenvolvimento com Spring Boot.
+Uma API REST robusta desenvolvida em **Java 21** com **Spring Boot 3.4.3** para gerenciamento completo de produtos, incluindo sistema de autenticação JWT e operações CRUD.
 
-Se puderem ajudar a compartilhar, isso me ajudaria muito! 🙌
+## 🎯 Objetivo do Projeto
 
-## 📚 O que você vai aprender:
+Esta API foi desenvolvida para fornecer uma solução completa de **gerenciamento de produtos** com funcionalidades de:
 
-✅ O que é o **Spring Framework** e o **Spring Boot**
-✅ Como criar um projeto com **Spring Initializr**
-✅ **Profiles** no **VSCode**
-✅ Estrutura básica e **Arquitetura em Camadas**
-✅ Persistência de dados com **Spring Data JPA**
-✅ Configuração do **PostgreSQL**
-✅ Criar a sua primeira **API REST**
-✅ Tratamento de **exceções** e padrões de resposta
-✅ Exceções **globais**
-✅ **Autenticação e Segurança** com **Spring Security e JWT**
-✅ **Autenticação de usuários** e proteção de **rotas**
+- **Autenticação segura** de usuários com JWT
+- **CRUD completo** de produtos (criar, listar, buscar, deletar)
+- **Persistência de dados** com PostgreSQL
+- **Arquitetura em camadas** seguindo boas práticas
+- **Tratamento de exceções** centralizado
+- **Segurança de endpoints** com Spring Security
 
-Espero de coração que vocês gostem! ❤️
+## 🚀 Tecnologias Utilizadas
 
-🎥 **Assista agora no YouTube:** [Clique aqui](https://youtu.be/SqU9v_V32RA?si=YtksU5MiJg8ujimm) 🚀
+| Tecnologia | Versão | Descrição |
+|------------|--------|-----------|
+| **Java** | 21 (LTS) | Linguagem de programação principal |
+| **Spring Boot** | 3.4.3 | Framework para desenvolvimento de aplicações |
+| **Spring Security** | 6.x | Segurança e autenticação |
+| **Spring Data JPA** | 3.x | Persistência e mapeamento objeto-relacional |
+| **PostgreSQL** | Latest | Banco de dados relacional |
+| **JWT** | 0.11.5 | Tokens de autenticação |
+| **Maven** | 3.x | Gerenciamento de dependências |
+
+## 📋 Funcionalidades da API
+
+### 🔐 **Autenticação**
+- **Registro de usuários**: Cadastro de novos usuários no sistema
+- **Login com JWT**: Autenticação gerando tokens seguros
+- **Proteção de rotas**: Endpoints protegidos por autenticação
+
+### 📦 **Gerenciamento de Produtos**
+- **Listagem**: Visualizar todos os produtos cadastrados
+- **Busca individual**: Encontrar produto específico por ID
+- **Cadastro**: Criar novos produtos no sistema
+- **Exclusão**: Remover produtos existentes
+
+### 💬 **Sistema de Mensagens**
+- **Mensagens do sistema**: Endpoint para comunicação com usuários
+
+## 📡 Endpoints da API
+
+### Autenticação (Público)
+```http
+POST /auth/register    # Registrar novo usuário
+POST /auth/login       # Fazer login e obter JWT
+```
+
+### Produtos (Protegido)
+```http
+GET    /api/produtos      # Listar todos os produtos
+GET    /api/produtos/{id} # Buscar produto por ID
+POST   /api/produtos      # Criar novo produto
+DELETE /api/produtos/{id} # Deletar produto
+```
+
+### Sistema (Protegido)
+```http
+GET /api/mensagem         # Obter mensagem do sistema
+```
+
+## 🛠️ Como Executar
+
+### Pré-requisitos
+- **Java 21 JDK** instalado
+- **PostgreSQL** configurado e rodando
+- **Maven** (ou usar o wrapper incluído)
+
+### 1️⃣ Clone o repositório
+```bash
+git clone git@github.com:marcelohs402015/api-springboot-produto.git
+cd api-springboot-produto
+```
+
+### 2️⃣ Configure o banco de dados
+Edite `src/main/resources/application.properties`:
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/meubanco
+spring.datasource.username=seu_usuario
+spring.datasource.password=sua_senha
+```
+
+### 3️⃣ Execute a aplicação
+```bash
+# Windows
+./mvnw.cmd spring-boot:run
+
+# Linux/macOS
+./mvnw spring-boot:run
+```
+
+🌐 **Aplicação disponível em:** `http://localhost:8080`
+
+## 📖 Exemplos de Uso
+
+### Registrar usuário
+```bash
+curl -X POST http://localhost:8080/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "usuario",
+    "password": "senha123"
+  }'
+```
+
+### Fazer login
+```bash
+curl -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "usuario",
+    "password": "senha123"
+  }'
+```
+
+### Criar produto
+```bash
+curl -X POST http://localhost:8080/api/produtos \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer SEU_TOKEN_JWT" \
+  -d '{
+    "nome": "Smartphone Galaxy",
+    "preco": 1299.99,
+    "descricao": "Smartphone Android com 128GB"
+  }'
+```
+
+### Listar produtos
+```bash
+curl -X GET http://localhost:8080/api/produtos \
+  -H "Authorization: Bearer SEU_TOKEN_JWT"
+```
+
+## 🏗️ Arquitetura do Projeto
+
+```
+src/main/java/com/example/meu_primeiro_springboot/
+├── 📁 controller/          # Camada de apresentação (REST Controllers)
+│   ├── AuthController.java       # Autenticação de usuários
+│   ├── ProdutoController.java     # Operações de produtos
+│   └── MensagemController.java    # Sistema de mensagens
+│
+├── 📁 model/               # Camada de modelo (Entidades JPA)
+│   ├── Produto.java              # Entidade Produto
+│   └── Usuario.java              # Entidade Usuário
+│
+├── 📁 repository/          # Camada de dados (Repositórios)
+│   ├── ProdutoRepository.java     # Repositório de produtos
+│   ├── UsuarioRepository.java     # Repositório de usuários
+│   └── MensagemRepository.java    # Repositório de mensagens
+│
+├── 📁 service/             # Camada de negócio (Serviços)
+│   ├── ProdutoService.java        # Lógica de produtos
+│   ├── UsuarioService.java        # Lógica de usuários
+│   ├── UsuarioDetailsService.java # Detalhes para autenticação
+│   └── MensagemService.java       # Lógica de mensagens
+│
+├── 📁 security/            # Configurações de segurança
+│   ├── SecurityConfig.java       # Configuração geral de segurança
+│   ├── JwtUtil.java              # Utilitários JWT
+│   └── JwtAuthFilter.java        # Filtro de autenticação JWT
+│
+└── 📁 exceptions/          # Tratamento de exceções
+    ├── GlobalExceptionHandler.java      # Handler global
+    └── RecursoNaoEncontradoException.java # Exceção customizada
+```
+
+## 🔒 Segurança
+
+- **Autenticação JWT**: Tokens seguros para acesso à API
+- **Proteção de endpoints**: Rotas `/api/**` protegidas
+- **Endpoints públicos**: Apenas `/auth/**` acessível sem token
+- **Headers de segurança**: Configurações de CORS e headers HTTP
+
+## 🎯 Casos de Uso
+
+### E-commerce
+- Gerenciar catálogo de produtos
+- Controlar acesso de administradores
+- Sistema de autenticação para vendedores
+
+### Inventário
+- Controle de estoque
+- Cadastro de produtos
+- Relatórios de produtos
+
+### Marketplace
+- API para múltiplos vendedores
+- Gestão centralizada de produtos
+- Sistema de autenticação unificado
+
+## 🚀 Próximas Melhorias
+
+- [ ] **Paginação** para listagem de produtos
+- [ ] **Filtros e busca** avançada
+- [ ] **Upload de imagens** para produtos
+- [ ] **Categorias** de produtos
+- [ ] **Roles e permissões** diferenciadas
+- [ ] **Documentação OpenAPI/Swagger**
+- [ ] **Testes automatizados**
+- [ ] **Containerização Docker**
+- [ ] **Monitoramento com Actuator**
+
+## 🤝 Contribuições
+
+Contribuições são sempre bem-vindas! Para contribuir:
+
+1. **Fork** o projeto
+2. Crie uma **branch** para sua feature (`git checkout -b feature/nova-funcionalidade`)
+3. **Commit** suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
+4. **Push** para a branch (`git push origin feature/nova-funcionalidade`)
+5. Abra um **Pull Request**
+
+## 📄 Licença
+
+Este projeto está sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+<div align="center">
+  <strong>Desenvolvido com ❤️ usando Spring Boot 3.4.3 e Java 21</strong>
+  <br>
+  <sub>API REST para gerenciamento de produtos</sub>
+</div>
 
